@@ -11,6 +11,7 @@ const TodoEditModal = ({ id }) => {
 
       return res.data;
     },
+    cacheTime: 0,
   });
 
   if (isLoading) return "Loading...";
@@ -35,7 +36,13 @@ const TodoEditModal = ({ id }) => {
       </div>
       <div className={classes.inputWrapper}>
         <label for="completed">완료여부 : </label>
-        <input id="completed" type="checkbox" className={classes.checkbox} />
+        <input
+          id="completed"
+          type="checkbox"
+          checked={data.completed}
+          onChange={(e) => {}}
+          className={classes.checkbox}
+        />
       </div>
     </div>
   );
