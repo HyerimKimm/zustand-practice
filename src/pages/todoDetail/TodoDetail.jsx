@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TodoPage = () => {
+const TodoDetail = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const TodoPage = () => {
     );
 };
 
-export default TodoPage;
+export default TodoDetail;
