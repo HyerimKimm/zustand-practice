@@ -12,9 +12,10 @@ export class TodoApi {
     }
 
     static updateTodoItem (params) {
-        return axios.put(`${this.BASE_URL}/todos`, {
+        return axios.put(`${this.BASE_URL}/todos/${params.id}`, {
             id: params.id,
             title: params.title,
+            userId: params.userId,
             completed: params.completed,
         })
     }
