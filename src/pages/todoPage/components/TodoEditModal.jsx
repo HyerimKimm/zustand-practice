@@ -17,7 +17,7 @@ const TodoEditModal = ({id}) => {
     });
 
     const {isLoading, isSuccess, error, data, isFetching} = useQuery({
-        queryKey: ["fetchTodoItem"],
+        queryKey: ["fetchTodoItem",id],
         queryFn: async () => {
             const res = await TodoApi.getTodoItem(id);
             return res.data;
@@ -26,22 +26,30 @@ const TodoEditModal = ({id}) => {
     });
 
     const updateData = useMutation({
-        mutationFn: (params) => {
-            TodoApi.updateTodoItem(params)
-        },
+        mutationFn: (params) => TodoApi.updateTodoItem(params),
         onSuccess: () => {
+            // Mutation 에 성공한 뒤 실행됨
             queryClient.invalidateQueries({
-                queryKey: ['fetchAllTodoList']
+                queryKey: ['fetchAllTodoList'] // fetchAllTodoList 의 데이터를 무효화 시킴.
             });
             modalClose();
         },
         onError: () => {
+            // mutation이 Error를 만나면 실행됨, try-catch-finally의 catch 역할임
         },
         onSettled: () => {
+            // mutation이 성공해서 성공한 데이터 또는 Error가 전달될 때 try-catch-finally의 finally 역할임
         },
         onMutate: () => {
+            // mutationFn이 실행되기 전에 실행되고, mutation 함수가 받을 동일한 변수가 전달된다.
+            // optimistic update 사용 시 유용한 함수이다. (백앤드에 API를 요청하고 나서, 기다리지 않고 response를 업데이트 하는 것)
         }
     });
+    /*
+    * updateData.mutate : updateData.mutate() => mutationFn을 실행한다.
+    * updateData.mutateAsync : .mutate와 같으나 promise를 반환한다.
+    *
+    * */
 
     const handleUpdateClick = async () => {
         updateData.mutate({
