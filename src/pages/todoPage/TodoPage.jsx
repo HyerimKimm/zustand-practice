@@ -1,16 +1,9 @@
-import {useQuery} from "@tanstack/react-query";
-import {TodoApi} from "../../api/TodoApi";
 import TodoListItem from "./components/TodoListItem";
 import classes from './TodoPage.module.scss';
+import {useTodoListQuery} from "../../query/useTodoQuery";
 
 function TodoPage() {
-  const { isLoading, error, data, isFetching } = useQuery({
-    queryKey: ['fetchAllTodoList'],
-    queryFn: async ()=> {
-      const res = await TodoApi.getAllTodoList();
-      return res;
-    },
-  });
+  const { isLoading, error, data, isFetching } = useTodoListQuery();
 
   if (isLoading) return "Loading...";
 
