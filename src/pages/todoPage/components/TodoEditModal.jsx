@@ -20,7 +20,7 @@ const TodoEditModal = ({id}) => {
         queryKey: ["fetchTodoItem",id],
         queryFn: async () => {
             const res = await TodoApi.getTodoItem(id);
-            return res.data;
+            return res;
         },
         cacheTime: 0,
     });
@@ -45,16 +45,13 @@ const TodoEditModal = ({id}) => {
             // optimistic update 사용 시 유용한 함수이다. (백앤드에 API를 요청하고 나서, 기다리지 않고 response를 업데이트 하는 것)
         }
     });
-    /*
-    * updateData.mutate : updateData.mutate() => mutationFn을 실행한다.
-    * updateData.mutateAsync : .mutate와 같으나 promise를 반환한다.
-    *
-    * */
+    /* updateData.mutate : updateData.mutate() => mutationFn을 실행한다.
+       updateData.mutateAsync : .mutate와 같으나 promise를 반환한다. */
 
     const handleUpdateClick = async () => {
         updateData.mutate({
             id: id,
-            userId: data.userId,
+            userId: data.data.userId,
             title: inputValue.title,
             completed: inputValue.completed,
         });
@@ -65,12 +62,12 @@ const TodoEditModal = ({id}) => {
     };
 
     useEffect(() => {
-        if (data) {
+        if (data?.data) {
             setInputValue({
                 id: id,
-                userId: data.userId,
-                title: data.title,
-                completed: data.completed,
+                userId: data.data.userId,
+                title: data.data.title,
+                completed: data.data.completed,
             })
         }
     }, [data]);

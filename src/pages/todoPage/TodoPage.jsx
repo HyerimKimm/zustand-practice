@@ -8,7 +8,7 @@ function TodoPage() {
     queryKey: ['fetchAllTodoList'],
     queryFn: async ()=> {
       const res = await TodoApi.getAllTodoList();
-      return res.data;
+      return res;
     },
   });
 
@@ -20,7 +20,7 @@ function TodoPage() {
       <div className={classes.pagewrapper}>
         <h1>오늘 할 일</h1>
         {
-        data.map((data, idx)=><TodoListItem key={idx} item={data}/> )
+        data.data.map((data, idx)=><TodoListItem key={idx} item={data}/> )
       }</div>
   );
 }
