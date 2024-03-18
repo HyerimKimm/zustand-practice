@@ -1,10 +1,16 @@
 import {useMutation} from "@tanstack/react-query";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {TodoApi} from "../api/TodoApi";
+import {createQueryKeys} from "@lukemorales/query-key-factory";
+
+const todoQueryKeys = createQueryKeys('todo',{
+    todoListQuery: ()=>['fetchAllTodoList'],
+    todoItemQuery: (id)=>['fetchTodoItem',{ id }],
+})
 
 export const useTodoListQuery = () => {
     return useQuery({
-        queryKey: ['fetchAllTodoList'],
+        queryKey: todoQueryKeys.todoListQuery().queryKey,
         queryFn: async () => {
             const res = await TodoApi.getAllTodoList();
             return res;
@@ -14,7 +20,7 @@ export const useTodoListQuery = () => {
 
 export const useTodoItemQuery = (id) => {
     return useQuery({
-        queryKey: ['fetchTodoItem',id],
+        queryKey: todoQueryKeys.todoItemQuery(id).queryKey,
         queryFn: async () => {
             const res = await TodoApi.getTodoItem(id);
             return res;

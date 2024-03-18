@@ -13,7 +13,7 @@ const App = () => {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right"/>
+            <ReactQueryDevtools initialIsOpen={true} buttonPosition="bottom-right"/>
             {isModalOpen && <Modal />}
             <TodoPage />
         </QueryClientProvider>

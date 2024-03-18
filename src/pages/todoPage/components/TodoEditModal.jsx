@@ -14,6 +14,7 @@ const TodoEditModal = ({id}) => {
 
     const {isLoading, error, data} = useTodoItemQuery(id);
     const updateData = useUpdateTodoMutation(handleCloseClick);
+
     /* updateData.mutate : updateData.mutate() => mutationFn을 실행한다.
        updateData.mutateAsync : .mutate와 같으나 promise를 반환한다. */
     async function handleUpdateClick() {
@@ -24,6 +25,7 @@ const TodoEditModal = ({id}) => {
             completed: inputValue.completed,
         });
     }
+
     function handleCloseClick() {
         modalClose();
     }
