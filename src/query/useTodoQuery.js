@@ -1,16 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { TodoApi } from "../api/TodoApi";
-import { createQueryKeys } from "@lukemorales/query-key-factory";
-
-const todoQueryKeys = createQueryKeys("todo", {
-  list: () => ["fetchAllTodoList"],
-  detail: (id) => ["fetchTodoItem", { id }],
-});
+import { queryKeys } from "./queryKeys";
 
 export const useTodoListQuery = () => {
   return useQuery({
-    queryKey: todoQueryKeys.list().queryKey,
+    queryKey: queryKeys.todo.list().queryKey,
     queryFn: async () => {
       const res = await TodoApi.getAllTodoList();
       return res;
@@ -20,7 +15,7 @@ export const useTodoListQuery = () => {
 
 export const useTodoItemQuery = (id) => {
   return useQuery({
-    queryKey: todoQueryKeys.detail(id).queryKey,
+    queryKey: queryKeys.todo.detail(id).queryKey,
     queryFn: async () => {
       const res = await TodoApi.getTodoItem(id);
       return res;
@@ -42,7 +37,7 @@ export const useUpdateTodoMutation = (
     onSuccess: () => {
       // Mutation 에 성공한 뒤 실행됨
       queryClient.invalidateQueries({
-        queryKey: todoQueryKeys.list().queryKey, // fetchAllTodoList 의 데이터를 무효화 시킴.
+        queryKey: queryKeys.todo.list().queryKey, // fetchAllTodoList 의 데이터를 무효화 시킴.
       });
       onSuccess && onSuccess();
     },
