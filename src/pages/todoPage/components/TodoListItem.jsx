@@ -1,10 +1,10 @@
 import React from "react";
 import classes from "./TodoListItem.module.scss";
-import { UiStore } from "../../../store/UiStore";
+import { useUIStore } from "../../../store/uiStore";
 import TodoEditModal from "./TodoEditModal";
 
 const TodoListItem = ({ item }) => {
-  const setModalInfoAndOpen = UiStore(
+  const setModalInfoAndOpen = useUIStore(
     (state) => state.actions.setModalInfoAndOpen
   );
 
